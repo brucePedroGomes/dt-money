@@ -2,13 +2,19 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 :root {
-    --background: #E5E5E5
+    --background: #E5E5E5;
+    --red: #E62E4D;
+    --blue: #5429CC;
+    --blue-light: #6933FF;
+    --text-title: #363F5f;
+    --text-body: #969CB3;
+    --shape: #FFFFFF;
 }
 
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 
@@ -24,6 +30,15 @@ html {
 
 body {
     background: var(--background);    
+}
+
+button {
+  cursor: pointer;
+}
+
+[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 `;
