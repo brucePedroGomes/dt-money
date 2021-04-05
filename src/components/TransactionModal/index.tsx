@@ -1,6 +1,8 @@
 import Modal from 'react-modal';
 import closeImg from '../../assets/close.svg';
-import { Form } from './style';
+import incomeImg from '../../assets/income.svg';
+import outcomeImg from '../../assets/outcome.svg';
+import { Form, TransactionType } from './style';
 
 type Props = {
   isOpen: boolean;
@@ -24,6 +26,18 @@ export const TransactionModal = ({ isOpen, handleCloseModel }: Props) => {
         <input placeholder="Titulo" />
 
         <input placeholder="Valor" type="number" />
+
+        <TransactionType>
+          <button>
+            <img src={incomeImg} alt="Entrada" />
+            <span>Entrada</span>
+          </button>
+
+          <button>
+            <img src={outcomeImg} alt="Entrada" />
+            <span>Entrada</span>
+          </button>
+        </TransactionType>
 
         <input placeholder="Categoria" />
 
