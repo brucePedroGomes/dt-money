@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import logoImg from '../../assets/logo.svg';
-import Modal from 'react-modal';
-
 import { Container, Content } from './styles';
+import logoImg from '../../assets/logo.svg';
+import { TransactionModal } from '../TransactionModal';
 
 export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,9 +19,7 @@ export const Header = () => {
       <Content>
         <img src={logoImg} alt="dt money" />
         <button onClick={handleOpenModel}>Nova transação</button>
-        <Modal isOpen={isModalOpen} onRequestClose={handleCloseModel}>
-          <h2>ok</h2>
-        </Modal>
+        <TransactionModal isOpen={isModalOpen} handleCloseModel={handleCloseModel} />
       </Content>
     </Container>
   );
