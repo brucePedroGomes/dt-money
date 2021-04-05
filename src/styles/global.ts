@@ -53,12 +53,12 @@ button {
 }
 
 .react-modal-overlay {
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
   bottom: 0;
   right: 0;
-  left: 0;
+  left: 0;  
 
   display: flex;
   align-items: center;
@@ -70,7 +70,7 @@ button {
   max-width: 576px;
   background: var(--background);
   padding: 3rem;
-  position: relative;
+  position: relative;  
   border-radius: 0.24rem;
 }
 
