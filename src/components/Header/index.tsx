@@ -7,7 +7,7 @@ export const Header = () => {
     <Container>
       <Content>
         <img src={logoImg} alt="dt money" />
-        <button>nova transação</button>
+        <button>Nova transação</button>
       </Content>
     </Container>
   );
