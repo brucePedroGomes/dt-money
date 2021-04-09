@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Modal from 'react-modal';
 import closeImg from '../../assets/close.svg';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
+import { api } from '../../services/api';
 import { Form, TransactionType, ButtonType } from './style';
 
 type Props = {
@@ -12,6 +13,18 @@ type Props = {
 
 export const TransactionModal = ({ isOpen, handleCloseModel }: Props) => {
   const [type, setType] = useState<'deposit' | 'withdraw'>('deposit');
+  const [state, setState] = useState({ title: '', amount: 0, category: '' });
+
+  const handleNewTransaction = (e: FormEvent) => {
+    e.preventDefault();
+
+    const data = {
+      ...state,
+      type,
+    };
+
+    api.post('/transactions', data);
+  };
 
   return (
     <Modal
@@ -23,12 +36,21 @@ export const TransactionModal = ({ isOpen, handleCloseModel }: Props) => {
       <button className="react-modal-close" type="button" onClick={handleCloseModel}>
         <img src={closeImg} alt="fechar modal" />
       </button>
-      <Form>
+      <Form onSubmit={handleNewTransaction}>
         <h1>Cadastrar transação</h1>
 
-        <input placeholder="Titulo" />
+        <input
+          placeholder="Titulo"
+          value={state.title}
+          onChange={(event) => setState({ ...state, title: event.target.value })}
+        />
 
-        <input placeholder="Valor" type="number" />
+        <input
+          placeholder="Valor"
+          type="number"
+          value={state.amount}
+          onChange={(event) => setState({ ...state, amount: +event.target.value })}
+        />
 
         <TransactionType>
           <ButtonType
@@ -52,7 +74,11 @@ export const TransactionModal = ({ isOpen, handleCloseModel }: Props) => {
           </ButtonType>
         </TransactionType>
 
-        <input placeholder="Categoria" />
+        <input
+          placeholder="Categoria"
+          value={state.category}
+          onChange={(event) => setState({ ...state, category: event.target.value })}
+        />
 
         <button type="submit">Cadastrar</button>
       </Form>
