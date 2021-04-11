@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import closeImg from '../../assets/close.svg';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
-import { api } from '../../services/api';
+import { useTransactions } from '../../hooks/useTransactions';
 import { Form, TransactionType, ButtonType } from './style';
 
 type Props = {
@@ -12,18 +12,27 @@ type Props = {
 };
 
 export const TransactionModal = ({ isOpen, handleCloseModel }: Props) => {
-  const [type, setType] = useState<'deposit' | 'withdraw'>('deposit');
-  const [state, setState] = useState({ title: '', amount: 0, category: '' });
+  const [state, setState] = useState<{
+    title: string;
+    amount: number;
+    category: string;
+    type: 'deposit' | 'withdraw';
+  }>({
+    title: '',
+    amount: 0,
+    category: '',
+    type: 'deposit',
+  });
+
+  const { createTransaction } = useTransactions();
 
   const handleNewTransaction = (e: FormEvent) => {
     e.preventDefault();
 
-    const data = {
-      ...state,
-      type,
-    };
+    createTransaction(state);
 
-    api.post('/transactions', data);
+    setState({ title: '', amount: 0, category: '', type: 'deposit' });
+    handleCloseModel();
   };
 
   return (
@@ -55,8 +64,8 @@ export const TransactionModal = ({ isOpen, handleCloseModel }: Props) => {
         <TransactionType>
           <ButtonType
             type="button"
-            onClick={() => setType('deposit')}
-            isActive={type === 'deposit'}
+            onClick={() => setState({ ...state, type: 'deposit' })}
+            isActive={state.type === 'deposit'}
             activeColor="green"
           >
             <img src={incomeImg} alt="Entrada" />
@@ -65,12 +74,12 @@ export const TransactionModal = ({ isOpen, handleCloseModel }: Props) => {
 
           <ButtonType
             type="button"
-            onClick={() => setType('withdraw')}
-            isActive={type === 'withdraw'}
+            onClick={() => setState({ ...state, type: 'withdraw' })}
+            isActive={state.type === 'withdraw'}
             activeColor="red"
           >
             <img src={outcomeImg} alt="Saída" />
-            <span>Entrada</span>
+            <span>Saída</span>
           </ButtonType>
         </TransactionType>
 
